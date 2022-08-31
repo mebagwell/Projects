@@ -1,0 +1,49 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: mediawiki-db
+spec:
+  selector:
+    matchLabels:
+      app: mediawiki-db
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: mediawiki-db
+    spec:
+      containers:
+        - name: mediawiki-db-container
+          image: jsurf/rpi-mariadb
+          env:
+            - name: MYSQL_DATABASE
+              value: wiki
+            - name: MYSQL_USER
+              value: wikiuser
+            - name: MYSQL_PASSWORD
+              value: wikipass
+            - name: MYSQL_RANDOM_ROOT_PASSWORD
+              value: 'yes'
+          volumeMounts:
+            - name: mariadb-persistent-storage
+              mountPath: /var/lib/mysql
+      volumes:
+        - name: mariadb-persistent-storage
+          persistentVolumeClaim:
+            claimName: mariadb-pv-claim
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: mediawiki-db-srv
+  labels:
+    app: mediawiki-db
+spec:
+  type: NodePort
+  ports:
+    - port: 3306
+      protocol: TCP
+  selector:
+    app: mediawiki-db

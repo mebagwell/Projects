@@ -1,0 +1,45 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: mediawiki-app
+  namespace: mediawiki
+spec:
+  selector:
+    matchLabels:
+      app: mediawiki-app
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: mediawiki-app
+    spec:
+      containers:
+        - name: mediawiki-container
+          image: mediawiki
+          imagePullPolicy: IfNotPresent
+          ports:
+            - containerPort: 80
+          volumeMounts:
+            - mountPath: /var/www/html
+              name: mediawiki-images-volume
+      volumes:
+        - name: mediawiki-images-volume
+          persistentVolumeClaim:
+            claimName: mediawiki-pv-claim
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: mediawiki-srv
+  namespace: mediawiki
+  labels:
+    app: mediawiki-app
+spec:
+  type: LoadBalancer
+  ports:
+    - port: 80
+      protocol: TCP
+  selector:
+    app: mediawiki-app
+
