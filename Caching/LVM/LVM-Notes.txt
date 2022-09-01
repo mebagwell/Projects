@@ -1,0 +1,9 @@
+./lvm-cache2.sh /dev/sda /dev/sdb vg_test lv_test lv_test_cache test 25%
+
+  echo "Slow PV = $1"
+  echo "Fast PV = $2"
+  echo "Volume Group = $3"
+  echo "Slow LV = $4"
+  echo "Fast LV = $5"
+  echo "Logical Volume Name = $6"
+  echo "Logincal Volume Size (% of PV) $7"
