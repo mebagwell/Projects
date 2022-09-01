@@ -30,6 +30,8 @@ lxc start ceph03
 printf "Pause to allow VMs to start\n"
 sleep 1m
 
+# Change sshd_config to allow root login, public key authentication, and password authentication. 
+# Restart sshd and set root password
 CEPH_VMS=('ceph01' 'ceph02' 'ceph03')
 for i in "${CEPH_VMS[@]}"
 do
@@ -41,3 +43,5 @@ do
   printf "Set password for root\n"
   lxc exec $i -- passwd
 done
+
+# Copy ssh key to each ceph node
