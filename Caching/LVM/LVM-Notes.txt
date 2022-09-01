@@ -1,4 +1,6 @@
 ./lvm-cache2.sh /dev/sda /dev/sdb vg_test lv_test lv_test_cache test 25%
+./lvm-cache2.sh /dev/sda /dev/sdb vg_home home 25%
+
 
   echo "Slow PV = $1"
   echo "Fast PV = $2"

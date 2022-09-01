@@ -62,5 +62,9 @@ echo "lvs -o+cache_mode $VG/$LV_NAME"
 
 echo "lvs -a $VG"
 
+echo "lvdisplay"
+
+echo "mkfs.ext4  /dev/vg_home/home"
+
 # https://www.howtogeek.com/442101/how-to-move-your-linux-home-directory-to-another-hard-drive/
 # https://webhostinggeeks.com/howto/4-lvcreate-command-examples-on-linux/#:~:text=lvcreate%20is%20the%20command%20to,space%20in%20the%20physical%20volumes.
